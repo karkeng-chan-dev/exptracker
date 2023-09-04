@@ -5,6 +5,7 @@ import { Button, IconButton, List } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { removeExpense } from '../redux/expenseSlice';
+import ExpenseItem from '../components/ExpenseItem';
 
 const ExpenseList = () => {
   const expenses = useSelector((state) => state.expenses.expenses);
@@ -39,23 +40,10 @@ const ExpenseList = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <List.Item
-      key={item.id}
-      title={item.name}
-      description={`$${item.amount?.toFixed(2)}`}
-      left={() => (
-        <IconButton
-          icon="pencil-outline"
-          onPress={() => handleEditExpense(JSON.stringify(item))}
-        />
-      )}
-      right={() => (
-        <IconButton
-          icon="delete-outline"
-          iconColor='red'
-          onPress={() => handleRemoveExpense(item.id)}
-        />
-      )}
+    <ExpenseItem 
+      item={item} 
+      onPressEdit={() => handleEditExpense(JSON.stringify(item))}
+      onPressDelete={() => handleRemoveExpense(item.id)}
     />
   );
 
